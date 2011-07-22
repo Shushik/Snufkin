@@ -20,16 +20,18 @@
 	Config options
 
 	 Alias     | Description
-	====================================================================
+	=====================================================================
 	 timeout   | timeout for waiting in seconds
 	 redirects | maximum number of redirects lib_curl will follow
 	 agent     | one of the keywords for the real user agent emulation
 	 referer   | referer link for the real browser emulation too
 	 cookies   | absolute path to cookie.jar file (with a file name)
+	           | you will need to set 777 permission on a directory with
+	           | a cookie-file
 	 charset   | default charset for encoding
 	 encoding  | usually it`s gzip/deflate
 	 headers   | common request headers
-	====================================================================
+	=====================================================================
 
 
 	List of available user agents
