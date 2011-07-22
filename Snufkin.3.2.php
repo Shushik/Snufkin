@@ -4,28 +4,7 @@
 	/**
 	 * Snufkin
 	 *
-	 * OOP-Libcurl extention
-	 *
-	 *
-	 * System requirements:
-	 *   – PHP ≥ 5;
-	 *   – libcurl;
-	 *   – iconv.
-	 *
-	 *
-	 * Code example:
-	 *   $Snufkin = new Snufkin(array(
-	 *      'timeout'   => 5,
-	 *      'redirects' => 10,
-	 *      'agent'     => 'win.ff',
-	 *      'referer'   => 'http://www.yandex.ru/',
-	 *      'cookies'   => '/path/to/cookies.jar',
-	 *      'charset'   => 'utf-8',
-	 *     'encoding'  => 'gzip,deflate',
-	 *   ));
-	 *
-	 *   $Snufkin->request_send('http://google.com');
-	 *
+	 * OOP wrapper for PHP lib_curl
 	 *
 	 * @author  Shushik <silkleopard@yandex.ru>
 	 * @version 3.2
