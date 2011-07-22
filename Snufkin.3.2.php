@@ -40,25 +40,32 @@
 
 		private
 			$agents  = array(
-				'win.ie.5'   => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0; SV1)',
-				'win.ie.6'   => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)',
-				'win.ie.7'   => 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
-				'win.ie.8'   => 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
-				'win.ff'     => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.6) Gecko/2009011913 Firefox/3.0.6',
-				'win.opera'  => 'Opera/9.63 (Windows NT 5.1; U; en)',
-				'win.safari' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Version/3.1.2 Safari/525.21',
-				'win.chrome' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.48 Safari/525.19',
+				'win.ie.5'      => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0; SV1)',
+				'win.ie.6'      => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)',
+				'win.ie.7'      => 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
+				'win.ie.8'      => 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
+				'win.ie.9'      => 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)',
 
-				'lin.ff'     => 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1b3pre) Gecko/20090217 Shiretoko/3.1b3pre',
-				'lin.kq'     => 'Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.10 (like Gecko)',
-				'lin.opera'  => 'Opera/9.63 (X11; Linux i686; U; en) Presto/2.1.1',
+				'win.ff.3'      => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.6) Gecko/2009011913 Firefox/3.0.6',
+				'win.ff.4'      => 'Mozilla/5.0 (Windows NT 5.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1',
+				'win.opera.9'   => 'Opera/9.63 (Windows NT 5.1; U; en)',
+				'win.safari.3'  => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Version/3.1.2 Safari/525.21',
+				'win.chrome.1'  => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.48 Safari/525.19',
 
-				'bsd.lynx'   => 'Lynx/2.8.6rel.5 libwww-FM/2.14 SSL-MM/1.4.1 OpenSSL/0.9.7e-p1',
-				'bsd.links'  => 'Links (2.2; FreeBSD 7.0-RC1 i386; 195x65)',
+				'lin.ff'        => 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1b3pre) Gecko/20090217 Shiretoko/3.1b3pre',
+				'lin.kq.3'      => 'Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.10 (like Gecko)',
+				'lin.opera.9'   => 'Opera/9.63 (X11; Linux i686; U; en) Presto/2.1.1',
 
-				'mac.ff'     => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.6) Gecko/2009011912 Firefox/3.0.6',
-				'mac.opera'  => 'Opera/9.62 (Macintosh; Intel Mac OS X; U; en) Presto/2.1.1',
-				'mac.safari' => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1',
+				'bsd.lynx'      => 'Lynx/2.8.6rel.5 libwww-FM/2.14 SSL-MM/1.4.1 OpenSSL/0.9.7e-p1',
+				'bsd.links'     => 'Links (2.2; FreeBSD 7.0-RC1 i386; 195x65)',
+
+				'mac.ff.3'      => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.6) Gecko/2009011912 Firefox/3.0.6',
+				'mac.ff.5'      => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:5.0.1) Gecko/20100101 Firefox/5.0.1',
+				'mac.opera.9'   => 'Opera/9.62 (Macintosh; Intel Mac OS X; U; en) Presto/2.1.1',
+				'mac.opera.11'  => 'Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; en) Presto/2.9.168 Version/11.50',
+				'mac.chrome.12' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30',
+				'mac.safari.3'  => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1',
+				'mac.safari.5' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
 			),
 			$common  = null,
 			$handler = null;
