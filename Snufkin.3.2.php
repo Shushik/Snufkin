@@ -44,7 +44,7 @@
 				'mac.opera.11'  => 'Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; en) Presto/2.9.168 Version/11.50',
 				'mac.chrome.12' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30',
 				'mac.safari.3'  => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1',
-				'mac.safari.5' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
+				'mac.safari.5'  => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
 			),
 			$common  = null,
 			$handler = null;
@@ -97,7 +97,7 @@
 						)
 					);
 
-					// Turn on the curl_lib cookies if the jar-file link given
+					// Turn on the lib_curl cookies if the jar file link given
 					if ($conf['cookies']) {
 						curl_setopt_array(
 							$this->handler,
