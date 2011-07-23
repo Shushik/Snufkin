@@ -27,7 +27,9 @@
 
 				'win.ff.3'      => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.6) Gecko/2009011913 Firefox/3.0.6',
 				'win.ff.4'      => 'Mozilla/5.0 (Windows NT 5.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1',
+				'win.ff.5'      => 'Mozilla/5.0 (Windows NT 6.1; rv:5.0) Gecko/20100101 Firefox/5.0',
 				'win.opera.9'   => 'Opera/9.63 (Windows NT 5.1; U; en)',
+				'win.opera.11'  => 'Opera/9.80 (Windows NT 5.1; U; en) Presto/2.9.168 Version/11.50',
 				'win.safari.3'  => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Version/3.1.2 Safari/525.21',
 				'win.chrome.1'  => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.48 Safari/525.19',
 

@@ -4,7 +4,7 @@
 
 	Goods
 
-	— Simple sintax;
+	— Simple syntax;
 	— Parsing of common http-request info into OOP-interface;
 	— Cookies support;
 	— Response body encoding.
@@ -45,7 +45,9 @@
 	 win.ie.9      | Windows  | Internet Explorer 9
 	 win.ff.3      | Windows  | Firefox 3.0.6
 	 win.ff.4      | Windows  | Firefox 4.0.1
+	 win.ff.5      | Windows  | Firefox 5.0
 	 win.opera.9   | Windows  | Opera 9.63
+	 win.opera.11  | Windows  | Opera 11.50
 	 win.safari.3  | Windows  | Safari 3.1.2
 	 win.chrome.1  | Windows  | Chrome 1.0
 	------------------------------------------------
