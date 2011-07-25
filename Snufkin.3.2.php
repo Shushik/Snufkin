@@ -96,19 +96,18 @@
 							CURLOPT_AUTOREFERER       => true,
 							CURLOPT_RETURNTRANSFER    => true,
 							CURLOPT_FOLLOWLOCATION    => true,
-							CURLOPT_UNRESTRICTED_AUTH => true
+							CURLOPT_UNRESTRICTED_AUTH => true,
 						)
 					);
 
-					// Turn on the lib_curl cookies if the jar file link given
+					// Turn on lib_curl cookies if the jar file link given
 					if ($conf['cookies']) {
-						curl_setopt_array(
-							$this->handler,
-							array(
-								CURLOPT_COOKIEJAR  => $conf['cookies'],
-								CURLOPT_COOKIEFILE => $conf['cookies']
-							)
-						);
+						$this->cookies_turn_on($conf['cookies']);
+					}
+
+					// Turn on SSL and apply SSL-settings
+					if ($conf['ssl']) {
+						$this->ssl_turn_on($conf['ssl']);
 					}
 				}
 			}
@@ -123,6 +122,103 @@
 			__destruct() {
 				if (is_resource($this->handler)) {
 					curl_close($this->handler);
+				}
+			}
+
+		/**
+		 * Turn on cookies and set up cookies support
+		 *
+		 * @private
+		 * @method
+		 *
+		 * @param string $path
+		 */
+		private function
+			cookies_turn_on($path) {
+				if (file_exists($path)) {
+					curl_setopt_array(
+						$this->handler,
+						array(
+							CURLOPT_COOKIEJAR  => $path,
+							CURLOPT_COOKIEFILE => $path,
+						)
+					);
+				}
+			}
+
+		/**
+		 * Turn on ssl and set up ssl support
+		 *
+		 * @private
+		 * @method
+		 *
+		 * @param string $path
+		 */
+		private function
+			ssl_turn_on($conf) {
+				switch (gettype($conf['ssl'])) {
+
+					// Apply default settings
+					case 'boolean':
+					case 'integer':
+						curl_setopt_array(
+							$this->handler,
+							array(
+								CURLOPT_SSLVERSION     => 3,
+								CURLOPT_SSL_VERIFYPEER => false,
+								CURLOPT_SSL_VERIFYHOST => false,
+							);
+						);
+					break;
+
+					// Apply custom settings
+					case 'array':
+						// Set up the sertificate check
+						if ($conf['ssl']['peer']) {
+							curl_setopt(
+								$this->handler,
+								CURLOPT_SSL_VERIFYPEER,
+								$conf['ssl']['peer']
+							);
+						}
+
+						// Set up the host check
+						if ($conf['ssl']['host']) {
+							curl_setopt(
+								$this->handler,
+								CURLOPT_SSL_VERIFYHOST,
+								$conf['ssl']['host']
+							);
+						}
+
+						// Set up the protocol version
+						if ($conf['ssl']['version']) {
+							curl_setopt(
+								$this->handler,
+								CURLOPT_SSLVERSION,
+								$conf['ssl']['version']
+							);
+						}
+
+						// Set up the ssl-sertificate path
+						if ($conf['ssl']['cert']) {
+							curl_setopt(
+								$this->handler,
+								CURLOPT_SSLCERT,
+								$conf['ssl']['cert']
+							);
+						}
+
+						// Set up the ssl-sertificate password
+						if ($conf['ssl']['cert']) {
+							curl_setopt(
+								$this->handler,
+								CURLOPT_SSLCERTPASSWD,
+								$conf['ssl']['pass']
+							);
+						}
+					break;
+
 				}
 			}
 

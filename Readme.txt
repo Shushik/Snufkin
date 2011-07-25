@@ -20,7 +20,7 @@
 	Config options
 
 	 Alias     | Description
-	=====================================================================
+	======================================================================
 	 timeout   | timeout for waiting in seconds
 	 redirects | maximum number of redirects lib_curl will follow
 	 agent     | one of the keywords for the real user agent emulation
@@ -31,7 +31,25 @@
 	 charset   | default charset for encoding
 	 encoding  | usually it`s gzip/deflate
 	 headers   | common request headers
-	=====================================================================
+	 ssl       | true to use default ssl settings or an array with custom
+	           | ssl settings
+	======================================================================
+
+
+	SSL settings
+
+	 Alias   | Type     | Description
+	==========================================================
+	 version | Optional | ssl protocol version
+	 peer    | Optional | false to prohibit sertificate check
+	         |          | true in other case
+	 host    | Optional | false to prohibit host check
+	         |          | 1 to check host existing only
+	         |          | 2 to check host host name
+	 cert    | Optional | full path to sertificate .pem file
+	         |          | (use with the «pass» option)
+	 pass    | Optional | password for the .pem sertificate
+	==========================================================
 
 
 	List of available user agents
