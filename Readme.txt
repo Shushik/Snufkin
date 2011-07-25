@@ -19,20 +19,20 @@
 
 	Config options
 
-	 Alias     | Description
+	 Alias     | Type     | Description
 	======================================================================
-	 timeout   | timeout for waiting in seconds
-	 redirects | maximum number of redirects lib_curl will follow
-	 agent     | one of the keywords for the real user agent emulation
-	 referer   | referer link for the real browser emulation too
-	 cookies   | absolute path to cookie.jar file (with a file name)
-	           | you will need to set 777 permission on a directory with
-	           | a cookie-file
-	 charset   | default charset for encoding
-	 encoding  | usually it`s gzip/deflate
-	 headers   | common request headers
-	 ssl       | true to use default ssl settings or an array with custom
-	           | ssl settings
+	 timeout   | Optional | timeout for waiting in seconds
+	 redirects | Optional | maximum number of redirects lib_curl will follow
+	 agent     | Optional | one of the keywords for the real user agent emulation
+	 referer   | Optional | referer link for the real browser emulation too
+	 cookies   | Optional | absolute path to cookie.jar file (with a file name)
+	           |          | you will need to set 777 permission on a directory with
+	           |          | a cookie-file
+	 charset   | Optional | default charset for encoding
+	 encoding  | Optional | usually it`s gzip/deflate
+	 headers   | Optional | common request headers
+	 ssl       | Optional | true to use default ssl settings or an array with custom
+	           |          | ssl settings
 	======================================================================
 
 
@@ -89,7 +89,20 @@
 	Code examples
 
 
-	 1. Create an object:
+	 1. Simple init and request
+
+	<code>
+		$Browser = new Snufkin;
+
+		$Browser-> get_request_send(
+			'http://facebook.com'
+		);
+
+		$Browser->dump_get();
+	</code>
+
+
+	 2. Create an object:
 
 	<code>
 		$conf = array(
@@ -113,7 +126,7 @@
 	</code>
 
 
-	 2. Make a GET-request:
+	 3. Make a GET-request:
 
 	<code>
 		$Browser->get_request_send(
@@ -138,7 +151,7 @@
 	=============================================================
 
 
-	 3. Make a POST-request:
+	 4. Make a POST-request:
 
 	<code>
 		$Browser->post_request_send(
@@ -168,7 +181,7 @@
 	=============================================================
 
 
-	 4. Change the response encoding:
+	 5. Change the response encoding:
 
 	<code>
 		$Browser->get_request_send(
@@ -191,7 +204,7 @@
 	=================================================================
 
 
-	 5. Clean response body from line skews, tabs and spaces
+	 6. Clean response body from line skews, tabs and spaces
 
 	<code>
 		$Browser->get_request_send(

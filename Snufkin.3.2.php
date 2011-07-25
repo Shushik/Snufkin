@@ -62,7 +62,7 @@
 		 * @param array $conf
 		 */
 		function
-			__construct($conf) {
+			__construct($conf = array()) {
 				// Initiate the connection to the curl
 				$this->handler = curl_init();
 
@@ -89,8 +89,8 @@
 						$this->handler,
 						array(
 							CURLOPT_HEADER            => true,
-							CURLOPT_TIMEOUT           => $conf['timeout'],
-							CURLOPT_ENCODING          => $conf['encoding'],
+							CURLOPT_TIMEOUT           => ($conf['timeout'] ? $conf['timeout'] : 5),
+							CURLOPT_ENCODING          => ($conf['encoding'] ? $conf['encoding'] : 'gzip/deflate'),
 							CURLOPT_USERAGENT         => $agent,
 							CURLOPT_MAXREDIRS         => $redirects,
 							CURLOPT_AUTOREFERER       => true,
