@@ -60,6 +60,8 @@
 		 * @method
 		 *
 		 * @param array $conf
+		 *
+		 * @return object
 		 */
 		function
 			__construct($conf = array()) {
@@ -110,6 +112,8 @@
 						$this->ssl_set_up($conf['ssl']);
 					}
 				}
+
+				return $this;
 			}
 
 		/**
@@ -233,6 +237,8 @@
 		 * @param boolean|array  $headers
 		 * @param boolean|string $referer
 		 * @param boolean        $raw_save
+		 *
+		 * @return object
 		 */
 		public function
 			request_send($url, $nobody = false, $headers = false, $referer = false, $raw_save = false) {
@@ -292,6 +298,8 @@
 					// Display a lib_curl error
 					$this->request->error = curl_error($this->handler);
 				}
+
+				return $this;
 			}
 
 		/**
@@ -305,11 +313,15 @@
 		 * @param boolean|array  $headers
 		 * @param boolean|string $referer
 		 * @param boolean        $raw_save
+		 *
+		 * @return object
 		 */
 		public function
 			get_request_send($url, $nobody = false, $headers = false, $referer = false, $raw_save = false) {
 				// Call the main function
 				$this->request_send($url, $nobody, $headers, $referer, $raw_save);
+
+				return $this;
 			}
 
 		/**
@@ -327,6 +339,8 @@
 		 * @param boolean|array  $headers
 		 * @param boolean|string $referer
 		 * @param boolean        $raw_save
+		 *
+		 * @return object
 		 */
 		public function
 			post_request_send(
@@ -353,6 +367,8 @@
 					// Display a lib_curl error
 					$this->request->error = curl_error($this->handler);
 				}
+
+				return $this;
 			}
 
 		/**
@@ -461,6 +477,8 @@
 		 *
 		 * @param string $given
 		 * @param string $needed
+		 *
+		 * @return object
 		 */
 		public function
 			response_charset_change($given = false, $needed = false) {
@@ -472,6 +490,8 @@
 						$this->request->body
 					);
 				}
+
+				return $this;
 			}
 
 		/**
@@ -479,6 +499,8 @@
 		 *
 		 * @public
 		 * @method
+		 *
+		 * @return object
 		 */
 		public function
 			response_body_clean() {
@@ -489,6 +511,8 @@
 						$this->response->body
 					);
 				}
+
+				return $this;
 			}
 
 		/**
