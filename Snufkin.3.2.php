@@ -167,7 +167,7 @@
 								CURLOPT_SSLVERSION     => 3,
 								CURLOPT_SSL_VERIFYPEER => false,
 								CURLOPT_SSL_VERIFYHOST => false,
-							);
+							)
 						);
 					break;
 
