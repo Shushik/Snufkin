@@ -16,9 +16,12 @@
 			$request  = null,
 			$response = null;
 
-
 		private
-			$agents  = array(
+			$common  = null,
+			$handler = null;
+
+		private static
+			$agents = array(
 				'win.ie.5'      => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0; SV1)',
 				'win.ie.6'      => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)',
 				'win.ie.7'      => 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
@@ -47,9 +50,7 @@
 				'mac.chrome.12' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30',
 				'mac.safari.3'  => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1',
 				'mac.safari.5'  => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
-			),
-			$common  = null,
-			$handler = null;
+			);
 
 
 		/**
