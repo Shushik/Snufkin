@@ -102,12 +102,12 @@
 
 					// Turn on lib_curl cookies if the jar file link given
 					if ($conf['cookies']) {
-						$this->cookies_turn_on($conf['cookies']);
+						$this->cookies_set_up($conf['cookies']);
 					}
 
 					// Turn on SSL and apply SSL-settings
 					if ($conf['ssl']) {
-						$this->ssl_turn_on($conf['ssl']);
+						$this->ssl_set_up($conf['ssl']);
 					}
 				}
 			}
@@ -134,7 +134,7 @@
 		 * @param string $path
 		 */
 		private function
-			cookies_turn_on($path) {
+			cookies_set_up($path) {
 				if (file_exists($path)) {
 					curl_setopt_array(
 						$this->handler,
@@ -155,7 +155,7 @@
 		 * @param string $path
 		 */
 		private function
-			ssl_turn_on($conf) {
+			ssl_set_up($conf) {
 				switch (gettype($conf['ssl'])) {
 
 					// Apply default settings
