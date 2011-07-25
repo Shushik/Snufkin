@@ -7,7 +7,9 @@
 	— Simple syntax;
 	— Parsing of common http-request info into OOP-interface;
 	— Cookies support;
-	— Response body encoding.
+	— Simple SSL support;
+	— Response body encoding;
+	— Methods chaining support.
 
 
 	System requirements
@@ -94,7 +96,7 @@
 	<code>
 		$Browser = new Snufkin;
 
-		$Browser-> get_request_send(
+		$Browser->get_request_send(
 			'http://facebook.com'
 		);
 
@@ -214,4 +216,38 @@
 		$Browser->response_body_clean();
 
 		$Browser->dump_get();
+	</code>
+
+
+	 7. Make a https request using default SSL settings
+
+	<code>
+		$conf = array(
+			'timeout'   => 5,
+			'redirects' => 10,
+			'agent'     => 'win.ff.3',
+			'referer'   => 'http://www.google.com/',
+			'ssl'       => true,
+		);
+
+		$Browser = new Snufkin($conf);
+	</code>
+
+
+	 8. Make a https request using custom SSL settings
+
+	<code>
+		$conf = array(
+			'timeout'   => 5,
+			'redirects' => 10,
+			'agent'     => 'win.ff.3',
+			'referer'   => 'http://www.google.com/',
+			'ssl'       => array(
+				'version' => 2,
+				'host'    => 1,
+				'peer'    => true,
+			),
+		);
+
+		$Browser = new Snufkin($conf);
 	</code>
