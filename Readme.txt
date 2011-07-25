@@ -5,11 +5,11 @@
 	Goods
 
 	— Simple syntax;
+	— Methods chaining support;
 	— Parsing of common http-request info into OOP-interface;
 	— Cookies support;
 	— Simple SSL support;
-	— Response body encoding;
-	— Methods chaining support.
+	— Response body encoding.
 
 
 	System requirements
@@ -22,7 +22,7 @@
 	Config options
 
 	 Alias     | Type     | Description
-	======================================================================
+	=================================================================================
 	 timeout   | Optional | timeout for waiting in seconds
 	 redirects | Optional | maximum number of redirects lib_curl will follow
 	 agent     | Optional | one of the keywords for the real user agent emulation
@@ -35,7 +35,7 @@
 	 headers   | Optional | common request headers
 	 ssl       | Optional | true to use default ssl settings or an array with custom
 	           |          | ssl settings
-	======================================================================
+	=================================================================================
 
 
 	SSL settings
@@ -231,6 +231,12 @@
 		);
 
 		$Browser = new Snufkin($conf);
+
+		$Browser->get_request_send(
+			'https://somehost.com'
+		);
+
+		$Browser->dump_get();
 	</code>
 
 
@@ -250,4 +256,10 @@
 		);
 
 		$Browser = new Snufkin($conf);
+
+		$Browser->get_request_send(
+			'https://somehost.com'
+		);
+
+		$Browser->dump_get();
 	</code>
