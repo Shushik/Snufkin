@@ -74,12 +74,12 @@
 
 					// Create a common properties object
 					$this->common = new stdClass;
-					$this->common->charset  = $conf['charset'] ? $conf['charset'] : 'utf-8';
-					$this->common->referer  = $conf['referer'] ? $conf['referer'] : 'http://google.com/';
-					$this->common->headers  = $conf['headers'] ? $conf['headers'] : array();
+					$this->common->charset  = @$conf['charset'] ? $conf['charset'] : 'utf-8';
+					$this->common->referer  = @$conf['referer'] ? $conf['referer'] : 'http://google.com/';
+					$this->common->headers  = @$conf['headers'] ? $conf['headers'] : array();
 
 					// Set the useragent
-					$agent = $conf['agent'] && $this->agents[$conf['agent']] ?
+					$agent = @$conf['agent'] && $this->agents[$conf['agent']] ?
 					         $this->agents[$conf['agent']] :
 					         'Snufkin Curl Client';
 
@@ -91,8 +91,8 @@
 						$this->handler,
 						array(
 							CURLOPT_HEADER            => true,
-							CURLOPT_TIMEOUT           => ($conf['timeout'] ? $conf['timeout'] : 5),
-							CURLOPT_ENCODING          => ($conf['encoding'] ? $conf['encoding'] : 'gzip/deflate'),
+							CURLOPT_TIMEOUT           => (@$conf['timeout'] ? $conf['timeout'] : 5),
+							CURLOPT_ENCODING          => (@$conf['encoding'] ? $conf['encoding'] : 'gzip/deflate'),
 							CURLOPT_USERAGENT         => $agent,
 							CURLOPT_MAXREDIRS         => $redirects,
 							CURLOPT_AUTOREFERER       => true,
@@ -103,12 +103,12 @@
 					);
 
 					// Turn on lib_curl cookies if the jar file link given
-					if ($conf['cookies']) {
+					if (@$conf['cookies']) {
 						$this->cookies_set_up($conf['cookies']);
 					}
 
 					// Turn on SSL and apply SSL-settings
-					if ($conf['ssl']) {
+					if (@$conf['ssl']) {
 						$this->ssl_set_up($conf['ssl']);
 					}
 				}
@@ -233,7 +233,7 @@
 		 * @method
 		 *
 		 * @param string         $url
-		 * @param boolean        $nobody
+		 * @param boolean        $no_body
 		 * @param boolean|array  $headers
 		 * @param boolean|string $referer
 		 * @param boolean        $raw_save
@@ -241,14 +241,14 @@
 		 * @return object
 		 */
 		public function
-			request_send($url, $nobody = false, $headers = false, $referer = false, $raw_save = false) {
+			request_send($url, $no_body = false, $headers = false, $referer = false, $raw_save = false) {
 				if ($this->ready) {
 					// Set up curl_lib settings for the current request
 					curl_setopt_array(
 						$this->handler,
 						array(
 							CURLOPT_URL        => $url,
-							CURLOPT_NOBODY     => $nobody,
+							CURLOPT_NOBODY     => $no_body,
 							CURLOPT_REFERER    => ($referer ? $referer : $this->common->referer),
 							CURLOPT_HTTPHEADER => ($headers ? $headers : $this->common->headers)
 						)
@@ -282,10 +282,10 @@
 						$this->response->body = array_pop($sections);
 
 						// Parse response headers
-						$this->response_headers_get($sections);
+						$this->response_headers_parse($sections);
 
 						// Reset CURLOPT_NOBODY to default value
-						if ($nobody) {
+						if ($no_body) {
 							curl_setopt($this->handler, CURLOPT_NOBODY, false);
 						}
 
@@ -309,7 +309,7 @@
 		 * @method
 		 *
 		 * @param string         $url
-		 * @param boolean        $nobody
+		 * @param boolean        $no_body
 		 * @param boolean|array  $headers
 		 * @param boolean|string $referer
 		 * @param boolean        $raw_save
@@ -317,9 +317,9 @@
 		 * @return object
 		 */
 		public function
-			get_request_send($url, $nobody = false, $headers = false, $referer = false, $raw_save = false) {
+			get_request_send($url, $no_body = false, $headers = false, $referer = false, $raw_save = false) {
 				// Call the main function
-				$this->request_send($url, $nobody, $headers, $referer, $raw_save);
+				$this->request_send($url, $no_body, $headers, $referer, $raw_save);
 
 				return $this;
 			}
@@ -335,7 +335,7 @@
 		 *
 		 * @param string         $url
 		 * @param boolean|array  $fields
-		 * @param boolean        $nobody
+		 * @param boolean        $no_body
 		 * @param boolean|array  $headers
 		 * @param boolean|string $referer
 		 * @param boolean        $raw_save
@@ -343,8 +343,7 @@
 		 * @return object
 		 */
 		public function
-			post_request_send(
-			$url, $fields = false, $nobody = false, $headers = false, $referer = false, $raw_save = false) {
+			post_request_send($url, $fields = false, $no_body = false, $headers = false, $referer = false, $raw_save = false) {
 				if ($this->ready) {
 					if ($fields) {
 						// Set POST request fields
@@ -359,7 +358,7 @@
 					curl_setopt($this->handler, CURLOPT_POST, true);
 
 					// Call the main function
-					$this->request_send($url, $nobody, $headers, $referer, $raw_save);
+					$this->request_send($url, $no_body, $headers, $referer, $raw_save);
 
 					// Turn the lib_curl back into a GET-mode
 					curl_setopt($this->handler, CURLOPT_HTTPGET, true);
@@ -380,7 +379,7 @@
 		 * @param array $sections
 		 */
 		private function
-			response_headers_get($sections) {
+			response_headers_parse($sections) {
 				// Count the headers sections
 				$requests = $this->request->redirects + 1;
 
@@ -410,7 +409,7 @@
 
 						if ($name == 'Set-Cookie') {
 							// Cookies got their own parser
-							$this->response_cookie_get($value, $pos);
+							$this->response_cookie_parse($value, $pos);
 						} else {
 							// Create the name => value pair in the headers array
 							$this->response->headers[$pos]->headers[$name] = $value;
@@ -446,7 +445,7 @@
 		 * @param integer $pos
 		 */
 		private function
-			response_cookie_get($src, $pos) {
+			response_cookie_parse($src, $pos) {
 				// Get the cookie params list
 				$params = explode('; ', $src);
 
@@ -465,6 +464,59 @@
 					// Save the cookie info
 					$this->response->headers[$pos]->cookies[$name]->{$param} = $value;
 				}
+			}
+
+		/**
+		 * Clean tabs, spaces and line skews from the response body
+		 *
+		 * @public
+		 * @method
+		 *
+		 * @return object
+		 */
+		public function
+			response_body_clean() {
+				if ($this->ready && $this->response->body) {
+					$this->response->body = preg_replace(
+						"/ {2,30}|\n|\r|\t/i",
+						'',
+						$this->response->body
+					);
+				}
+
+				return $this;
+			}
+
+		/**
+		 * Get http response head section
+		 *
+		 * @public
+		 * @method
+		 *
+		 * @param boolean|string $section
+		 * @param boolean|string $part
+		 * @param boolean|string $name
+		 *
+		 * @return boolean|array|object
+		 */
+		public function
+			response_section_get($section = false, $part = false, $name = false) {
+				if ($this->response->{$section}) {
+					if ($part && $this->response->{$section}->{$part}) {
+						if ($name && $this->response->{$section}->{$part}[$name]) {
+							// Get header or cookie value
+							return $this->response->{$section}->{$part}[$name];
+						}
+
+						// Get part of head section
+						return $this->response->{$section}->{$part};
+					}
+
+					// Get full response section
+					return $this->response->{$section};
+				}
+
+				return false;
 			}
 
 		/**
@@ -488,27 +540,6 @@
 						($given ? $given : $this->request->http['Charset']),
 						($needed ? $needed : $this->common->charset),
 						$this->request->body
-					);
-				}
-
-				return $this;
-			}
-
-		/**
-		 * Clean tabs, spaces and line skews from the response body
-		 *
-		 * @public
-		 * @method
-		 *
-		 * @return object
-		 */
-		public function
-			response_body_clean() {
-				if ($this->ready && $this->response->body) {
-					$this->response->body = preg_replace(
-						"/ {2,30}|\n|\r|\t/i",
-						'',
-						$this->response->body
 					);
 				}
 
@@ -559,16 +590,137 @@
 		 * @param boolean                             $html
 		 */
 		public function
-			dump_get($target = false, $html = false) {
-				if ($html) {
+			dump_get($target = false, $no_html = false) {
+				if ($no_html) {
 					echo '<pre>';
 				}
 
 				print_r($target ? $target : $this);
 
-				if ($html) {
+				if ($no_html) {
 					echo '</pre>';
 				}
+			}
+
+
+		/**
+		 *********************************
+		 **                             **
+		 **  Short aliases for methods  **
+		 **                             **
+		 *********************************
+		 */
+
+
+		/**
+		 * Alias for get_request_send()
+		 *
+		 * @param string         $url
+		 * @param boolean        $no_body
+		 *
+		 * @return object
+		 */
+		public function
+			get($url, $no_body = false) {
+				return $this->get_request_send($url, $no_body);
+			}
+
+		/**
+		 * Alias for post_request_send()
+		 *
+		 * @param string         $url
+		 * @param boolean|array  $fields
+		 * @param boolean        $no_body
+		 *
+		 * @return object
+		 */
+		public function
+			post($url, $params = false, $no_body = false) {
+				return $this->post_request_send($url, $params, $no_body);
+			}
+
+		/**
+		 * Get unparsed response
+		 *
+		 * @return boolean|string
+		 */
+		public function
+			raw() {
+				return $this->response_section_get('raw');
+			}
+
+		/**
+		 * Get body section of response
+		 *
+		 * @return boolean|string
+		 */
+		public function
+			body() {
+				return $this->response_section_get('body');
+			}
+
+		/**
+		 * Get head section of response
+		 *
+		 * @return boolean|object
+		 */
+		public function
+			head() {
+				return $this->response_section_get('head');
+			}
+
+		/**
+		 * Get http part of response head section
+		 *
+		 * @return boolean|array
+		 */
+		public function
+			http() {
+				return $this->response_section_get('head', 'http');
+			}
+
+		/**
+		 * Get headers part of response head section
+		 *
+		 * @return boolean|array
+		 */
+		public function
+			headers() {
+				return $this->response_section_get('head', 'headers');
+			}
+
+		/**
+		 * Get header by name
+		 *
+		 * @param boolean|string $name
+		 *
+		 * @return boolean|array
+		 */
+		public function
+			header($name = false) {
+				return $this->response_section_get('head', 'headers', $name);
+			}
+
+		/**
+		 * Get all cookies
+		 *
+		 * @return boolean|array
+		 */
+		public function
+			cookies() {
+				return $this->response_section_get('head', 'cookies');
+			}
+
+		/**
+		 * Get cookie by name
+		 *
+		 * @param boolean|string $name
+		 *
+		 * @return boolean|array
+		 */
+		public function
+			cookie($name = false) {
+				return $this->response_section_get('head', 'cookies', $name);
 			}
 
 	}
