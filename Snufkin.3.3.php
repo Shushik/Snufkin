@@ -60,13 +60,11 @@
 		 * @method
 		 *
 		 * @param boolean|string|array $param_0
-		 * @param boolean|string|array $param_1
 		 *
 		 * @return object
 		 */
 		function
-			__construct($param_0 = false, $param_1 = false) {
-				$url  = '';
+			__construct($conf = false) {
 				$conf = array(
 					'timeout'   => 5,
 					'redirects' => 2,
@@ -77,24 +75,11 @@
 					'ssl'       => array(),
 					'headers'   => array(),
 				);
-				$args = func_get_args();
 
-				// Check if there were given config or url in arguments
-				foreach ($args as $arg) {
-					switch (gettype($arg)) {
-
-						case 'string':
-							// Url given
-							$url = $arg;
-						break;
-
-						case 'array':
-							// Config given
-							foreach ($arg as $alias => $value) {
-								$conf[$alias] = $value;
-							}
-						break;
-
+				if ($conf) {
+					// Change default config values
+					foreach ($conf as $alias => $value) {
+						$conf[$alias] = $value;
 					}
 				}
 
@@ -136,13 +121,6 @@
 					if (@$conf['ssl']) {
 						$this->ssl_setup($conf['ssl']);
 					}
-
-					// If url argument exists, send get request immediately
-					if ($url != '') {
-						$this->get_request_send($url);
-					}
-
-					return $this;
 				}
 			}
 
@@ -503,8 +481,8 @@
 		 * @public
 		 * @method
 		 *
-		 * @param string $given
-		 * @param string $needed
+		 * @param boolean|string $given
+		 * @param boolean|string $needed
 		 *
 		 * @return object
 		 */
@@ -515,7 +493,7 @@
 					$this->response->body = iconv(
 						($given ? $given : $this->request->http['Charset']),
 						($needed ? $needed : $this->common->charset),
-						$this->request->body
+						$this->response->body
 					);
 				}
 
@@ -637,6 +615,17 @@
 				return $this->response_section_get('body');
 			}
 
+
+		/**
+		 * Get head section of response
+		 *
+		 * @return boolean|object
+		 */
+		public function
+			heads() {
+				return $this->response_section_get('headers');
+			}
+
 		/**
 		 * Get head section of response
 		 *
@@ -701,6 +690,34 @@
 				return $this->response_section_get('head', 'cookies', $name);
 			}
 
+		/**
+		 * Change encoding
+		 *
+		 * @public
+		 * @method
+		 *
+		 * @param boolean|string $given
+		 * @param boolean|string $needed
+		 *
+		 * @return object
+		 */
+		public function
+			charset($given = false, $needed = false) {
+				return $this->response_body_recode($given, $needed);
+			}
+
+		/**
+		 * Clean tabs, spaces and line skews from the response body
+		 *
+		 * @public
+		 * @method
+		 *
+		 * @return object
+		 */
+		public function
+			trim() {
+				return $this->response_body_clean();
+			}
 
 	}
 
