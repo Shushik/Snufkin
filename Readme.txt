@@ -288,3 +288,25 @@
 
 		$Browser->dump_get();
 	</code>
+
+
+	11. Add extra user defined parsers
+
+	<code>
+		include('Snufkin.3.3.php');
+
+		class Snufkin_X extends Snufkin {
+			public function
+				x_headers_parse() {
+				}
+
+			public function
+				x_body_parse() {
+				}
+		}
+
+		$Browser = new Snufkin_X;
+	</code>
+
+	Both methods will be running automaticly with every request and will
+	be having direct access to OOP properties.
