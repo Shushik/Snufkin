@@ -132,12 +132,12 @@
 	 3. Make a GET-request
 
 	<code>
-		$Browser->get('http://facebook.com');
+		$Browser->get('http://www.google.com');
 
 		$Browser->dump_get();
 	</code>
 
-	Params for get_request_send()
+	Params for get()
 
 	     | Param    | Description
 	=============================================================
@@ -152,7 +152,7 @@
 
 	<code>
 		$Browser->post(
-			'http://facebook.com',
+			'http://www.google.com',
 			array(
 				'param1' => 'value1',
 				'param2' => 'value2',
@@ -162,7 +162,7 @@
 		$Browser->dump_get();
 	</code>
 
-	Params for post_request_send()
+	Params for post()
 
 	     | Param    | Description
 	=============================================================
@@ -174,19 +174,36 @@
 	=============================================================
 
 
-	 5. Make a HEAD-request
+	 5. Set a custom referer for a single http request
 
 	<code>
-		$Browser->get('http://www.facebook.com', true);
+		$Browser->set('referer', 'http://www.google.com')->get('http://www.google.com');
+
+		$Browser->dump_get();
+	</code>
+
+	Params for set()
+
+	     | Param  | Description
+	==========================================================
+	  1. | setion | 'headers' or 'referer'
+	  2. | value  | string for 'referer', array for 'headers'
+	==========================================================
+
+
+	 6. Make a HEAD-request
+
+	<code>
+		$Browser->get('http://www.google.com', true);
 
 		$Browser->dump_get();
 	</code>
 
 
-	 6. Get the section of http-response
+	 7. Get the section of http-response
 
 	<code>
-		$Browser->get('http://facebook.com');
+		$Browser->get('http://www.google.com');
 
 		$raw     = $Browser->raw();
 		$body    = $Browser->body();
@@ -218,10 +235,10 @@
 	===============================================================
 
 
-	 7. Change the response encoding:
+	 8. Change the response encoding:
 
 	<code>
-		$Browser->get('http://facebook.com')->charset('utf-8', 'windows-1251');
+		$Browser->get('http://www.google.com')->charset('utf-8', 'windows-1251');
 
 		$Browser->dump_get();
 	</code>
@@ -237,16 +254,16 @@
 	=================================================================
 
 
-	 8. Clean response body from line skews, tabs and spaces
+	 9. Clean response body from line skews, tabs and spaces
 
 	<code>
-		$Browser->get('http://facebook.com')->trim();
+		$Browser->get('http://www.google.com')->trim();
 
 		$Browser->dump_get();
 	</code>
 
 
-	 9. Make a https request using default SSL settings
+	10. Make a https request using default SSL settings
 
 	<code>
 		$conf = array(
@@ -267,7 +284,7 @@
 	</code>
 
 
-	10. Make a https request using custom SSL settings
+	11. Make a https request using custom SSL settings
 
 	<code>
 		$conf = array(
@@ -290,7 +307,7 @@
 	</code>
 
 
-	11. Add extra user defined parsers
+	12. Add extra user defined parsers
 
 	<code>
 		include('Snufkin.3.3.php');
