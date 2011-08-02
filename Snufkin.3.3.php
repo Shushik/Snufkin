@@ -17,6 +17,7 @@
 			$response = null;
 
 		private
+			$temp    = false,
 			$common  = null,
 			$handler = null;
 
@@ -102,9 +103,11 @@
 						array(
 							CURLOPT_HEADER            => true,
 							CURLOPT_TIMEOUT           => $conf['timeout'],
+							CURLOPT_REFERER           => $conf['referer'],
 							CURLOPT_ENCODING          => $conf['encoding'],
 							CURLOPT_USERAGENT         => $conf['agent'],
 							CURLOPT_MAXREDIRS         => $conf['redirects'],
+							CURLOPT_HTTPHEADER        => $conf['headers'],
 							CURLOPT_AUTOREFERER       => true,
 							CURLOPT_RETURNTRANSFER    => true,
 							CURLOPT_FOLLOWLOCATION    => true,
@@ -235,7 +238,62 @@
 			}
 
 		/**
-		 * Send a GET request
+		 * Reset common settings for HTTP request
+		 *
+		 * @public
+		 * @method
+		 *
+		 * @param string       $section
+		 * @param string|array $value
+		 *
+		 * @return object
+		 */
+		public function
+			http_request_set($section, $value) {
+				if ($this->ready) {
+					switch ($section) {
+
+						case 'referer':
+							curl_setopt($this->handler, CURLOPT_REFERER, $value);
+						break;
+
+						case 'headers':
+							curl_setopt($this->handler, CURLOPT_HTTPHEADER, $value);
+						break;
+
+					}
+
+					$this->temp = true;
+
+					return $this;
+				}
+			}
+
+		/**
+		 * Reset common settings for HTTP request
+		 *
+		 * @private
+		 * @method
+		 *
+		 * @return object
+		 */
+		private function
+			http_request_unset() {
+				if ($this->ready) {
+					curl_setopt_array(
+						$this->handler,
+						array(
+							CURLOPT_REFERER    => $this->common->referer,
+							CURLOPT_HTTPHEADER => $this->commmon->headers,
+						)
+					);
+
+					$this->temp = false;
+				}
+			}
+
+		/**
+		 * Send a HTTP request
 		 *
 		 * @public
 		 * @method
@@ -247,7 +305,7 @@
 		 * @return object
 		 */
 		public function
-			get_request_send($url, $no_body = false, $raw_save = false) {
+			http_request_send($url, $no_body = false, $raw_save = false) {
 				if ($this->ready) {
 					// Set up curl_lib settings for the current request
 					curl_setopt_array(
@@ -294,6 +352,8 @@
 							$this->x_body_parse();
 						}
 
+						$this->http_request_unset();
+
 						// Reset CURLOPT_NOBODY to default value
 						if ($no_body) {
 							curl_setopt($this->handler, CURLOPT_NOBODY, false);
@@ -307,6 +367,23 @@
 				}
 
 				return $this;
+			}
+
+		/**
+		 * Send a GET request
+		 *
+		 * @public
+		 * @method
+		 *
+		 * @param string  $url
+		 * @param boolean $no_body
+		 * @param boolean $raw_save
+		 *
+		 * @return object
+		 */
+		public function
+			get_request_send($url, $no_body = false, $raw_save = false) {
+				return $this->http_request_send($url, $no_body, $raw_save);
 			}
 
 		/**
@@ -338,7 +415,7 @@
 					);
 
 					// Make the request
-					$this->get_request_send($url, $no_body, $raw_save);
+					$this->http_request_send($url, $no_body, $raw_save);
 				}
 			}
 
@@ -562,6 +639,22 @@
 		 *********************************
 		 */
 
+
+		/**
+		 * Alias for http_request_set()
+		 *
+		 * @public
+		 * @method
+		 *
+		 * @param string       $section
+		 * @param string|array $value
+		 *
+		 * @return object
+		 */
+		public function
+			set($section, $value) {
+				return $this->http_request_set($section, $value);
+			}
 
 		/**
 		 * Alias for get_request_send()
