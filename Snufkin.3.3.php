@@ -22,7 +22,7 @@
 			$handler = null;
 
 		private static
-			$agents = array(
+			$agents   = array(
 				'win.ie.5'      => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0; SV1)',
 				'win.ie.6'      => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)',
 				'win.ie.7'      => 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
@@ -60,12 +60,12 @@
 		 * @constructor
 		 * @method
 		 *
-		 * @param boolean|string|array $param_0
+		 * @param boolean|string|array $custon_conf
 		 *
 		 * @return object
 		 */
 		function
-			__construct($conf = false) {
+			__construct($custon_conf = false) {
 				$conf = array(
 					'timeout'   => 5,
 					'redirects' => 2,
@@ -77,9 +77,9 @@
 					'headers'   => array(),
 				);
 
-				if ($conf) {
+				if ($custon_conf) {
 					// Change default config values
-					foreach ($conf as $alias => $value) {
+					foreach ($custon_conf as $alias => $value) {
 						$conf[$alias] = $value;
 					}
 				}
