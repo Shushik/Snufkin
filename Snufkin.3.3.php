@@ -52,6 +52,17 @@
 				'mac.safari.3'  => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1',
 				'mac.safari.5'  => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
 			);
+			
+		protected $defaultParams = array(
+			'timeout'   => 5,
+			'redirects' => 2,
+			'agent'     => 'Snufkin 4.0',
+			'referer'   => 'http://github.com/Shushik/Snufkin/',
+			'charset'   => 'utf-8',
+			'encoding'  => 'gzip/deflate',
+			'ssl'       => array(),
+			'headers'   => array(),
+		);
 
 
 		/**
@@ -64,25 +75,8 @@
 		 *
 		 * @return object
 		 */
-		function
-			__construct($conf = false) {
-				$conf = array(
-					'timeout'   => 5,
-					'redirects' => 2,
-					'agent'     => 'Snufkin 4.0',
-					'referer'   => 'http://github.com/Shushik/Snufkin/',
-					'charset'   => 'utf-8',
-					'encoding'  => 'gzip/deflate',
-					'ssl'       => array(),
-					'headers'   => array(),
-				);
-
-				if ($conf) {
-					// Change default config values
-					foreach ($conf as $alias => $value) {
-						$conf[$alias] = $value;
-					}
-				}
+		public function construct($params = array()) {
+				$params = array_merge($this->defaultParams, $params);
 
 				// Initiate the connection to the curl
 				$this->handler = curl_init();
@@ -93,21 +87,21 @@
 
 					// Create a common properties object
 					$this->common = new stdClass;
-					$this->common->charset = $conf['charset'];
-					$this->common->referer = $conf['referer'];
-					$this->common->headers = $conf['headers'];
+					$this->common->charset = $params['charset'];
+					$this->common->referer = $params['referer'];
+					$this->common->headers = $params['headers'];
 
 					// Set up the basic curl_lib settings
 					curl_setopt_array(
 						$this->handler,
 						array(
 							CURLOPT_HEADER            => true,
-							CURLOPT_TIMEOUT           => $conf['timeout'],
-							CURLOPT_REFERER           => $conf['referer'],
-							CURLOPT_ENCODING          => $conf['encoding'],
-							CURLOPT_USERAGENT         => $conf['agent'],
-							CURLOPT_MAXREDIRS         => $conf['redirects'],
-							CURLOPT_HTTPHEADER        => $conf['headers'],
+							CURLOPT_TIMEOUT           => $params['timeout'],
+							CURLOPT_REFERER           => $params['referer'],
+							CURLOPT_ENCODING          => $params['encoding'],
+							CURLOPT_USERAGENT         => $params['agent'],
+							CURLOPT_MAXREDIRS         => $params['redirects'],
+							CURLOPT_HTTPHEADER        => $params['headers'],
 							CURLOPT_AUTOREFERER       => true,
 							CURLOPT_RETURNTRANSFER    => true,
 							CURLOPT_FOLLOWLOCATION    => true,
@@ -116,13 +110,13 @@
 					);
 
 					// Turn on lib_curl cookies if the jar file link given
-					if (@$conf['cookies']) {
-						$this->cookies_setup($conf['cookies']);
+					if (@$params['cookies']) {
+						$this->cookies_setup($params['cookies']);
 					}
 
 					// Turn on SSL and apply SSL-settings
-					if (@$conf['ssl']) {
-						$this->ssl_setup($conf['ssl']);
+					if (@$params['ssl']) {
+						$this->ssl_setup($params['ssl']);
 					}
 				}
 			}
@@ -170,8 +164,8 @@
 		 * @param string $path
 		 */
 		private function
-			ssl_setup($conf) {
-				switch (gettype($conf['ssl'])) {
+			ssl_setup($params) {
+				switch (gettype($params['ssl'])) {
 
 					// Apply default settings for ssl
 					case 'boolean':
@@ -189,47 +183,47 @@
 					// Apply custom settings
 					case 'array':
 						// Set the sertificate check
-						if ($conf['ssl']['peer']) {
+						if ($params['ssl']['peer']) {
 							curl_setopt(
 								$this->handler,
 								CURLOPT_SSL_VERIFYPEER,
-								$conf['ssl']['peer']
+								$params['ssl']['peer']
 							);
 						}
 
 						// Set the host check
-						if ($conf['ssl']['host']) {
+						if ($params['ssl']['host']) {
 							curl_setopt(
 								$this->handler,
 								CURLOPT_SSL_VERIFYHOST,
-								$conf['ssl']['host']
+								$params['ssl']['host']
 							);
 						}
 
 						// Set the protocol version
-						if ($conf['ssl']['version']) {
+						if ($params['ssl']['version']) {
 							curl_setopt(
 								$this->handler,
 								CURLOPT_SSLVERSION,
-								$conf['ssl']['version']
+								$params['ssl']['version']
 							);
 						}
 
 						// Set the ssl-sertificate path
-						if ($conf['ssl']['cert']) {
+						if ($params['ssl']['cert']) {
 							curl_setopt(
 								$this->handler,
 								CURLOPT_SSLCERT,
-								$conf['ssl']['cert']
+								$params['ssl']['cert']
 							);
 						}
 
 						// Set the ssl-sertificate password
-						if ($conf['ssl']['cert']) {
+						if ($params['ssl']['cert']) {
 							curl_setopt(
 								$this->handler,
 								CURLOPT_SSLCERTPASSWD,
-								$conf['ssl']['pass']
+								$params['ssl']['pass']
 							);
 						}
 					break;
