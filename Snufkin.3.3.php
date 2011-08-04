@@ -75,7 +75,7 @@
 		 *
 		 * @return object
 		 */
-		public function construct($params = array()) {
+		public function __construct($params = array()) {
 				$params = array_merge($this->defaultParams, $params);
 
 				// Initiate the connection to the curl
