@@ -284,7 +284,9 @@
 						$this->handler,
 						array(
 							CURLOPT_REFERER    => $this->common->referer,
-							CURLOPT_HTTPHEADER => $this->commmon->headers,
+							CURLOPT_HTTPHEADER => $this->common->headers ?
+							                      $this->common->headers :
+							                      array(),
 						)
 					);
 
